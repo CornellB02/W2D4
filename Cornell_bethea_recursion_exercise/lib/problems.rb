@@ -12,6 +12,11 @@
 # pow(3, 4) # => 81
 # pow(4, 3) # => 64
 def pow(base, exponent)
+#basecase: if exponent == 0, return 1
+if exponent == 0 
+    return 1
+end 
+return base * pow(base, exponent - 1)
 
 end
 
@@ -35,7 +40,10 @@ end
 # lucas_number(5)   # =>    11
 # lucas_number(9)   # =>    76
 def lucas_number(n)
+    return 2 if n == 0
+    return 1 if n == 1
 
+    return lucas_number(n - 1) + lucas_number(n - 2)
 end
 
 
@@ -51,7 +59,9 @@ end
 # sum_array([5, 2])         # => 7
 # sum_array([4, 10, -1, 2]) # => 15
 def sum_array(array)
-
+   return 0 if array.length < 1 
+   
+   return array.pop + sum_array(array)
 end
 
 
@@ -66,9 +76,13 @@ end
 # reverse_string("c")           # => "c"
 # reverse_string("internet")    # => "tenretni"
 # reverse_string("friends")     # => "sdneirf"
-def reverse_string(str)
 
-end
+    def reverse_string(str)
+        #BASE CASE: If the string has a length of 0 return empty string
+        return "" if str.length == 0
+        #RECURSIVE STEP: remove last character + reverse_string(str[0..-2])
+        return str[-1] + reverse_string(str[0...-1])
+    end
 
 
 # A 1-dimensional array is also known as a flattened array.
@@ -100,5 +114,12 @@ end
 #     2-dimensional array: [['some data']]
 #     3-dimensional array: [[['some data']]]
 def flatten(data)
+    return [data] if !data.instance_of? Array
 
+    res = []
+    data.each do |ele|
+        res += flatten(ele)
+    end
+
+    return res
 end
